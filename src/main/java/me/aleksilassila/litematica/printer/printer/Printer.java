@@ -569,10 +569,10 @@ public class Printer extends PrinterUtils {
             } else if (LitematicaMixinMod.INVENTORY.getBooleanValue()) {
                 for (Item item : items2) {
                      //#if MC >= 12001
-                        //#if MC > 12004
-                        //$$ MemoryUtils.currentMemoryKey = client.world.getRegistryKey().getValue();
+                        //#if MC <= 12004
+                        //$$ MemoryUtils.currentMemoryKey = client.world.getDimensionKey().getValue();
                         //#else
-                        MemoryUtils.currentMemoryKey = client.world.getDimensionKey().getValue();
+                        MemoryUtils.currentMemoryKey = client.world.getRegistryKey().getValue();
                         //#endif
                       MemoryUtils.itemStack = new ItemStack(item);
                       if (SearchItem.search(true)) {

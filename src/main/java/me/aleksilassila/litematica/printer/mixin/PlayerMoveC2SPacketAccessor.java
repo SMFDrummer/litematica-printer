@@ -23,4 +23,9 @@ public interface PlayerMoveC2SPacketAccessor {
 
     @Accessor("changePosition")
     public boolean changePosition();
+
+    //#if MC >= 12103
+    @Accessor("horizontalCollision")
+    public boolean horizontalCollision();
+    //#endif
 }

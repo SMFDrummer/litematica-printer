@@ -50,7 +50,11 @@ public class Implementation {
         playerEntity.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(
                 Implementation.getRequiredYaw(playerEntity, playerShouldBeFacing),
                 Implementation.getRequiredPitch(playerEntity, playerShouldBeFacing),
-                playerEntity.isOnGround()));
+                playerEntity.isOnGround()
+                //#if MC >= 12103
+                , playerEntity.horizontalCollision
+                //#endif
+        ));
     }
 
     public static boolean isLookOnlyPacket(Packet<?> packet) {
@@ -71,7 +75,13 @@ public class Implementation {
         double y = ((PlayerMoveC2SPacketAccessor) packet).getY();
         double z = ((PlayerMoveC2SPacketAccessor) packet).getZ();
         boolean onGround = ((PlayerMoveC2SPacketAccessor) packet).getOnGround();
-        return new PlayerMoveC2SPacket.Full(x, y, z, yaw, pitch, onGround);
+
+        //#if MC >= 12103
+        boolean horizontalCollision = ((PlayerMoveC2SPacketAccessor) packet).horizontalCollision();
+        return new PlayerMoveC2SPacket.Full(x, y, z, yaw, pitch, onGround, horizontalCollision);
+        //#else
+        //$$ return new PlayerMoveC2SPacket.Full(x, y, z, yaw, pitch, onGround);
+        //#endif
     }
 
     protected static float getRequiredYaw(ClientPlayerEntity playerEntity, Direction playerShouldBeFacing) {
